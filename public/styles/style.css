@@ -1,0 +1,350 @@
+* {
+	box-sizing: border-box;
+}
+
+:root {
+	--font-color: lightyellow;
+	--font: font-family: 'Times New Roman', Times, serif;
+}
+
+@font-face {
+	font-family: Allura Regular;
+	src: url(./Allura-Regular.woff);
+	font-weight: 400;
+	font-style: italic;
+}
+
+body {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100vh;
+	align-items: center;
+	object-fit: cover;
+	background-image: url(../assets/Fuji.jpg);
+	/* background-size: cover; */
+	background-repeat: no-repeat;
+	object-fit: contain;
+}
+
+.header {
+	width: 100%;
+	/* min-height: 0px; */
+	flex: 0 0 auto;
+	margin: 0 auto;
+	background-color: rgba(160, 167, 174, 0.5);
+	-webkit-box-shadow: 0px 0px 84px 12px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 0px 84px 12px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 0px 84px 12px rgba(0, 0, 0, 0.75);
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	padding-top: 10px;
+}
+
+.header__head {
+	font-family: var(--font);
+	font-size: 22px;
+	font-style: italic;
+	color: var(--font-color)
+}
+
+.header__list {
+	display: flex;
+	flex-direction: row;
+}
+
+.list {}
+
+.list__item {
+	color: var(--font-color);
+}
+
+/* Загальні стилі для контейнера іконок */
+.social-icons-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+/* Стилі для іконок соціальних мереж */
+.social-icon {
+	margin: 10px;
+	/* Відступ між іконками */
+	width: 40px;
+	/* Ширина іконки */
+	height: 40px;
+	/* Висота іконки */
+	cursor: pointer;
+	/* Зміна курсору на руку при наведенні */
+
+	/* Зазначте URL до відповідних іконок іконок для соціальних мереж */
+	background-size: cover;
+	transition: transform 0.2s;
+	/* Анімація "припідняття" при наведенні */
+}
+
+/* Анімація "припідняття" при наведенні */
+.social-icon:hover {
+	transform: translateY(-5px);
+	/* Зсув іконки вгору на 5px */
+}
+
+.main {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	justify-content: center;
+	/* margin: 0 auto; */
+}
+
+.main__wrapper {
+	background-color: rgba(160, 167, 174, 0.66);
+	-webkit-box-shadow: 0px 0px 84px 12px rgba(0, 0, 0, 0.75);
+	-moz-box-shadow: 0px 0px 84px 12px rgba(0, 0, 0, 0.75);
+	box-shadow: 0px 0px 84px 12px rgba(0, 0, 0, 0.75);
+	border-radius: 15px;
+	margin: 30px 0 30px 0;
+}
+
+.content {
+
+	position: relative;
+	padding: 10px;
+	display: flex;
+	flex-direction: column;
+	max-width: 320px;
+}
+
+.content--find {
+	max-width: 320px;
+}
+
+.content--disabled {
+	display: none;
+}
+
+.content__head {
+	color: var(--font-color);
+	font-size: 24px;
+	text-align: center;
+	line-height: 28px;
+	padding: 10px;
+	font-style: italic;
+}
+
+.content__form {
+	display: flex;
+	flex-direction: column;
+	min-height: 50px;
+}
+
+.form {
+	padding: 10px;
+	min-height: 110px;
+	flex: 1 1 auto;
+	justify-content: space-between;
+}
+
+.form--find {
+	font-size: 24px;
+}
+
+.form__input {
+	font-family: var(--font);
+	height: 40px;
+	padding: 5px;
+	font-size: 20px;
+	border-radius: 15px;
+	border: 1px solid lightyellow;
+	color: lightyellow;
+	background-color: rgba(160, 167, 174, 0.3);
+	font-style: italic;
+}
+
+.form__input:focus {
+	outline-color: lightyellow;
+	font-style: italic;
+}
+
+.form__input::placeholder {
+	text-align: center;
+	color: lightyellow;
+}
+
+.form__submit {
+	font-family: var(--font);
+	font-size: inherit;
+	font-style: italic;
+	border-radius: 15px;
+	border: 1px solid lightyellow;
+	padding: 5px;
+	display: inline-block;
+	vertical-align: middle;
+	-webkit-transform: perspective(1px) translateZ(0);
+	transform: perspective(1px) translateZ(0);
+	box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+	position: relative;
+	background: lightyellow;
+	-webkit-transition-property: color;
+	transition-property: color;
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+}
+
+.form__submit::before {
+	content: "";
+	position: absolute;
+	z-index: -1;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	border-radius: 15px;
+	background: rgba(178, 153, 191, 0.7);
+	-webkit-transform: scaleX(0);
+	transform: scaleX(0);
+	-webkit-transform-origin: 50%;
+	transform-origin: 50%;
+	-webkit-transition-property: transform;
+	transition-property: transform;
+	-webkit-transition-duration: 0.3s;
+	transition-duration: 0.3s;
+	-webkit-transition-timing-function: ease-out;
+	transition-timing-function: ease-out;
+}
+
+.form__submit:active {
+	color: rgba(94, 85, 113, 255);
+	border: 1px solid rgba(94, 85, 113, 255);
+}
+
+.content__img-container {
+	width: 100%;
+	min-height: 150px;
+	background-color: grey;
+}
+
+.content__img {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	object-fit: cover;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	height: 160px;
+}
+
+.content--info {}
+
+.content__container {
+	display: flex;
+	flex-direction: column;
+}
+
+.table {
+	color: var(--font-color);
+	border: 1px solid lightyellow;
+	border-radius: 10px;
+	border-collapse: separate !important;
+
+	margin-bottom: 10px;
+}
+
+.table__row {
+	text-align: center;
+}
+
+.table__head {
+	padding: 4px;
+	text-align: center;
+}
+
+.table__data {
+	padding: 4px;
+}
+
+.content--modal {
+	/* display: flex; */
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+.content__progress {}
+
+
+.progress-container {
+	min-width: 100px;
+	background-color: lightyellow;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.progress-bar {
+	width: 0%;
+	border-radius: 5px;
+	text-align: center;
+	height: 20px;
+	background-color: rgba(124, 158, 220, 1);
+}
+
+
+
+.content__download {
+	margin-bottom: 10px;
+}
+
+.content__back {
+	padding: 10px;
+	font-size: 18px;
+}
+
+.download {
+	display: block;
+	color: black;
+	text-decoration: none;
+	background-color: var(--font-color);
+	padding: 10px;
+	border-radius: 15px;
+	font-size: 20px;
+	font-style: italic;
+	text-align: center;
+}
+
+.download--disabled {}
+
+.loader {
+	border: 16px solid lightpink;
+	border-radius: 50%;
+	border-top: 16px solid lightyellow;
+	width: 120px;
+	height: 120px;
+	-webkit-animation: spin 2s linear infinite;
+	/* Safari */
+	animation: spin 2s linear infinite;
+}
+
+/* Safari */
+@-webkit-keyframes spin {
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
+}
+
+@keyframes spin {
+	0% {
+		transform: rotate(0deg);
+	}
+
+	100% {
+		transform: rotate(360deg);
+	}
+}

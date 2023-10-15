@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>yt.dofamine</title>
+	<link rel="stylesheet" href="../styles/null.css">
+	<link rel="stylesheet" href="../styles/style.css">
+</head>
+
+<body>
+	<header class="header">
+		<h3 class="header__head">provided by D0FΔM1NΣ</h3>
+		<ul class="header__list list">
+			<li class="list__item social-icons-container">
+				<a href="https://www.instagram.com" class="social-icon"
+					style="background-image: url('../assets/instagram.png');"></a>
+			</li>
+			<li class="list__item social-icons-container">
+				<a href="https://t.me/D0F4M1N3" class="social-icon"
+					style="background-image: url('../assets/telegram.png');"></a>
+			</li>
+			<li class="list__item social-icons-container">
+				<a href="https://www.facebook.com" class="social-icon"
+					style="background-image: url('../assets/facebook.png');"></a>
+			</li>
+			<li class="list__item social-icons-container">
+				<a href="https://www.linkedin.com" class="social-icon"
+					style="background-image: url('../assets/linkedin.png');"></a>
+			</li>
+			<li class="list__item social-icons-container">
+				<a href="https://github.com/RedDofamine" class="social-icon"
+					style="background-image: url('../assets/github.png');"></a>
+			</li>
+		</ul>
+
+	</header>
+	<main class="main">
+		<div class="main__wrapper">
+			<article class="content content--find">
+				<h2 class="content__head">Find your youtube video by pasting link</h2>
+				<form onsubmit="sendUrl()" id="url" class="content__form form form--find">
+					<input class="form__input" type="url" name="url" placeholder="paste your link here">
+					<button class="form__submit" type="submit">find</button>
+				</form>
+			</article>
+			<article class="content content--info content--disabled">
+				<!-- <div class="content__img-container">
+					<img src="../assets/Fuji.jpg" alt="img" class="content__img">
+				</div>
+				<h2 class="content__head">Title of finded video</h2>
+				<div class="content__container">
+					<table class="table">
+						<tr class="table__row">
+							<th colspan="4" class="table__head">AUDIO</th>
+						</tr>
+						<tr class="table__row">
+							<th class="table__head">container</th>
+							<th class="table__head">frequency</th>
+							<th class="table__head">bitrate</th>
+						</tr>
+						<tr class="table__row">
+							<form class="content__form form" id="downloadForm1">
+								<td class="table__data">mp3<input type="hidden" name="container" value="mp3"></td>
+								<td class="table__data">44.1kHz<input type="hidden" name="frequency" value="44100"></td>
+								<td class="table__data">190kbps<input type="hidden" name="bitrate" value="190"></td>
+								<td class="table__data form"><button class="form__submit" type="button"
+										onclick="downloadForm(1)">load</button></td>
+							</form>
+						</tr>
+						<tr class="table__row">
+							<form class="content__form form" id="downloadForm2">
+								<td class="table__data">mp3<input type="hidden" name="container" value="mp3"></td>
+								<td class="table__data">44.1kHz<input type="hidden" name="frequency" value="44100"></td>
+								<td class="table__data">128kbps<input type="hidden" name="bitrate" value="128"></td>
+								<td class="table__data"><button class="form__submit" type="button"
+										onclick="downloadForm(2)">load</button></td>
+							</form>
+						</tr>
+					</table>
+					<table class="table">
+						<tr class="table__row">
+							<th colspan="4" class="table__head">VIDEO</th>
+						</tr>
+						<tr class="table__row">
+							<th class="table__head">container</th>
+							<th class="table__head">quality</th>
+						</tr>
+						<tr class="table__row">
+							<form class="content__form form" id="downloadForm1">
+								<td class="table__data">mp4<input type="hidden" name="container" value="mp4"></td>
+								<td class="table__data">1080p<input type="hidden" name="frequency" value="1080"></td>
+								<td class="table__data form"><button class="form__submit" type="button"
+										onclick="downloadForm(1)">load</button></td>
+							</form>
+						</tr>
+						<tr class="table__row">
+							<form class="content__form form" id="downloadForm1">
+								<td class="table__data">mp4<input type="hidden" name="container" value="mp4"></td>
+								<td class="table__data">720p<input type="hidden" name="frequency" value="720"></td>
+								<td class="table__data form"><button class="form__submit" type="button"
+										onclick="downloadForm(1)">load</button>
+								</td>
+							</form>
+						</tr>
+					</table>
+				</div>
+				<button class="form__submit content__back">back to find page</button> -->
+			</article>
+			<article class="content content--modal content--disabled">
+				<div class="loader"></div>
+				<h2 class="content__head">LOADING</h2>
+				<!-- <div class="progress-container">
+					<div class="progress-bar" id="progress-bar"></div>
+				</div>
+				<button type="button" onclick="move()">click</button> -->
+			</article>
+			<article class="content content--download content--disabled">
+				<a href="#0" class="content__download download download--disabled">download</a>
+				<button class="form__submit content__back">back to download page</button>
+			</article>
+		</div>
+	</main>
+	<script src="../scripts/infoUI.js"></script>
+	<script>
+		const findBlock = document.querySelector('.content--find')
+		const infoBlock = document.querySelector('.content--info')
+		const downloadBLock = document.querySelector('.content--download')
+		const modalBlock = document.querySelector('.content--modal')
+
+		async function fetchData(url) {
+			try {
+				const responce = await fetch(url, {
+					method: 'GET',
+					headers: {
+						"Content-Type": "application/json"
+					}
+				})
+				if (responce.ok) {
+					const data = await responce.json()
+					console.log(data)
+					const generatedHTML = ui(data)
+					infoBlock.insertAdjacentHTML('beforeend', generatedHTML)
+					modalBlock.classList.add('content--disabled')
+					infoBlock.classList.remove('content--disabled')
+				} else {
+					console.error('Помилка запиту:', responce.status)
+				}
+			} catch (err) {
+				console.error('Помилка:', err)
+			}
+		}
+		function sendUrl() {
+			const urlForm = document.getElementById('url')
+			event.preventDefault()
+
+			const urlFormData = new FormData(urlForm)
+
+			const data = {}
+			urlFormData.forEach((value, key) => {
+				data[key] = value
+			})
+			if (!data.url) {
+				console.log('it\'s empty')
+			} else {
+				findBlock.classList.add('content--disabled')
+				modalBlock.classList.remove('content--disabled')
+				fetchData('?url=' + data.url)
+			}
+		}
+
+
+		function downloadForm(formId) {
+			const form = document.getElementById(`downloadForm${formId}`);
+			const formData = new FormData(form);
+			const data = {};
+			formData.forEach((value, key) => {
+				data[key] = value;
+			});
+
+			console.log(data);
+		}
+	</script>
+</body>
+
+</html>
