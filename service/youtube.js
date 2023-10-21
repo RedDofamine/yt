@@ -16,17 +16,19 @@ function mediaFilter(format, filterData) {
 	return false;
 }
 
-async function getResource(url, filterData, filePath) {
+function getResource(url, filterData, filePath) {
 	const stream = ytdl(url, { filter: format => mediaFilter(format, filterData) })
-	stream.pipe(fs.createWriteStream(filePath));
+	return stream
+	// stream.pipe(fs.createWriteStream(filePath));
+	// stream.on('finish', () => {
+	// 	return true
+	// 	console.log('Відео завантажено успішно!');
+	// });
 
-	stream.on('finish', () => {
-		console.log('Відео завантажено успішно!');
-	});
-
-	stream.on('error', (err) => {
-		console.error('Помилка завантаження відео:', err);
-	});
+	// stream.on('error', (err) => {
+	// 	return false
+	// 	console.error('Помилка завантаження відео:', err);
+	// });
 }
 async function getInfo(url) {
 	return await ytdl.getInfo(url)
@@ -105,13 +107,16 @@ async function get(url) {
 	}
 }
 async function download(url, filter, name) {
-	// const fileName = `${name}.${filter.container}`
+	const fileName = `${name}.${filter.container}`
 	const dir = `${process.cwd()}\\public\\files\\`
-	const filePath = dir + name
+	// const filePath = dir + name
+	const filePath = dir + fileName
 	console.log(url, filter, name, filePath)
-	await getResource(url, filter, filePath)
-	return dir
+	if (getResource(url, filter, filePath)) {
+		return fileName
+	}
 }
+// encodeURIComponent
 // async function download(url, item) {
 // 	const getResource(url, item, )
 // }
@@ -120,5 +125,6 @@ async function download(url, filter, name) {
 // start(link)
 export default {
 	get,
-	download
+	download,
+	getResource,
 }

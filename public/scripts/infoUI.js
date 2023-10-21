@@ -29,38 +29,42 @@ const getHead = (data, title) => {
 		</tr>
 	`
 }
-const getItem = (el) => {
+const getItem = (el, id) => {
 	let string = ''
 	for (let key in el) {
-		string += `<td class="table__data">${el[key] > 1000 ? el[key] / 1000 + 'kHz' : el[key]}</td><input type="hidden" name="${key}" value="${el[key]}">`
+		string += `
+			<td class="table__data">${el[key] > 1000 ? el[key] / 1000 + 'kHz' : el[key]}</td>
+			<input form="${id}" type="hidden" name="${key}" value="${el[key]}">
+		`
 	}
-	// for (let key in el) {
-	// 	string += `<td class="table__data">${el[key]}<input type="hidden" name="container" value="${el[key]}"></td>`
-	// }
+	// string += `
+	// 	<input form="${id}" type="hidden" name="url" value="${}">
+	// 	<input form="${id}" type="hidden" name="name" value="${}">
+	// `
 	return string
 }
-const getRows = (data) => {
+const getRows = (data, title) => {
 
 	const rows = data.map((el, index) => {
-		const item = getItem(el)
+		const id = `${title}LoadForm${index}`
+		const item = getItem(el, id)
+
 		return `
 			<tr class="table__row">
-				<form class="content__form form" id="downloadForm${index}">
-					${item}
-					<td class="table__data">
-						<button class="form__submit" type="button" onclick="downloadForm(${index})">load</button>
-					</td>
-				</form>
+				${item}
+				<td class="table__data">
+					<button form="${id}" class="form__submit" type="button" onclick="loadForm('${id}')">load</button>
+				</td>
 			</tr>
 		`
 	}).join('')
-	console.log(rows)
+
 	return rows
 }
 
 const table = (data, head, title) => {
 	const headRows = getHead(head, title)
-	const dataRows = getRows(data)
+	const dataRows = getRows(data, title)
 	return `
 		<table class="table">
 			${headRows}
@@ -68,31 +72,19 @@ const table = (data, head, title) => {
 		</table>
 	`
 }
-// const ui = (data) => {
-// 	return `
-// 		<article class="content content--info content--disabled">
-// 			<div class="content__img-container ${!data.image || !data.image.url ? 'content--disabled' : ''}">
-// 				<img src="${data.image.url}" alt="img" class="content__img">
-// 			</div>
-// 				<h2 class="content__head">${data.name}</h2>
-// 			<div class="content__container">
-// 				${table(data.audioList, staticAudioHead, 'AUDIO')}
-// 				${table(data.videoList, staticVideoHead, 'VIDEO')}
-// 			</div>
-// 		</article>
-// 		<button class="form__submit content__back">back to find page</button>
-// 	`.join('')
-// }
-const ui = (data) => {
+const infoUI = (data) => {
+	console.log(data)
 	return `
 		<div class="content__img-container ${!data.image || !data.image.url ? 'content--disabled' : ''}">
 			<img src="${data.image.url}" alt="img" class="content__img">
 		</div>
 			<h2 class="content__head">${data.name}</h2>
+			<input form="options" type="hidden" name="url" value="${data.url}">
+			<input form="options" type="hidden" name="name" value="${data.name}">
 		<div class="content__container">
-			${table(data.audioList, staticAudioHead, 'AUDIO')}
-			${table(data.videoList, staticVideoHead, 'VIDEO')}
+			${table(data.audioList, staticAudioHead, 'Audio')}
+			${table(data.videoList, staticVideoHead, 'Video')}
 		</div>
-		<button class="form__submit content__back">back to find page</button>
+		<button id="back" onclick="back('find', 'info')" class="form__submit content__back">back to find page</button>
 	`
 }
