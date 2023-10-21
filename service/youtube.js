@@ -1,5 +1,6 @@
 import ytdl from "ytdl-core"
 import fs from 'fs'
+import path from 'path'
 // import download from "../utils/download"
 function mediaFilter(format, filterData) {
 	const keys = Object.keys(filterData);
@@ -108,7 +109,7 @@ async function get(url) {
 }
 async function download(url, filter, name) {
 	const fileName = `${name}.${filter.container}`
-	const dir = `${process.cwd()}\\public\\files\\`
+	const dir = path.join(process.cwd(), '/public/files/')
 	// const filePath = dir + name
 	const filePath = dir + fileName
 	console.log(url, filter, name, filePath)

@@ -19,7 +19,8 @@ export async function get(req, res) {
 		// console.log(path.join(__dirname, '/public/pages/index.html'))
 		if (!url) {
 			// return res.status(200).json({ message: 'ok' })
-			return res.sendFile(path.join(__dirname, '../public/pages/index.html'))
+			console.log(path.join(process.cwd(), '/public/pages/index.html'))
+			return res.sendFile(path.join(process.cwd(), '/public/pages/index.html'))
 
 		}
 		const data = await youtube.get(url)
@@ -65,7 +66,7 @@ export async function download(req, res) {
 	const { link } = req.params
 	console.log('link', link)
 	try {
-		const filePath = path.join(__dirname, `../public/files/${link}`)
+		const filePath = path.join(process.cwd(), `/public/files/${link}`)
 		res.download(filePath, (err) => {
 			if (err) {
 				console.error(err)
