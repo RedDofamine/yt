@@ -31,11 +31,23 @@ const getHead = (data, title) => {
 }
 const getItem = (el, id) => {
 	let string = ''
+	let disp
 	for (let key in el) {
+		if (el[key] > 1000) {
+			disp = el[key] / 1000 + 'kHz'
+		} else if (el[key] == 'mp4') {
+			disp = 'mp3'
+		} else {
+			disp = el[key]
+		}
 		string += `
-			<td class="table__data">${el[key] > 1000 ? el[key] / 1000 + 'kHz' : el[key]}</td>
+			<td class="table__data">${disp}</td>
 			<input form="${id}" type="hidden" name="${key}" value="${el[key]}">
 		`
+		// string += `
+		// 	<td class="table__data">${el[key] > 1000 ? el[key] / 1000 + 'kHz' : el[key]}</td>
+		// 	<input form="${id}" type="hidden" name="${key}" value="${el[key]}">
+		// `
 	}
 	// string += `
 	// 	<input form="${id}" type="hidden" name="url" value="${}">
@@ -83,7 +95,7 @@ const infoUI = (data) => {
 			<input form="options" type="hidden" name="name" value="${data.name}">
 		<div class="content__container">
 			${table(data.audioList, staticAudioHead, 'Audio')}
-			${table(data.videoList, staticVideoHead, 'Video')}
+			<!-- ${table(data.videoList, staticVideoHead, 'Video')} -->
 		</div>
 		<button id="back" onclick="back('find', 'info')" class="form__submit content__back">back to find page</button>
 	`

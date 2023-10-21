@@ -2,6 +2,10 @@ import youtube from "../service/youtube.js"
 import fs from 'fs'
 import path from 'path'
 import { fileURLToPath } from "url"
+
+function sanitizeFileName(fileName) {
+	return fileName.replace(/[\\/:\*\?"<>\|]/g, '')
+}
 const __filename = fileURLToPath(import.meta.url);
 
 const __dirname = path.dirname(__filename);
@@ -32,11 +36,12 @@ export async function get(req, res) {
 
 export async function load(req, res) {
 	const { url, filter, name } = req.body
-	console.log(req.body)
+	const container = filter.container == 'mp4' ? 'mp3' : filter.container
 
 	try {
-		if (filter.container == 'mp4') filter.container == 'mp3'
-		const fileName = `${name}.${filter.container}`
+
+		const fileName = sanitizeFileName(`${name}.${container}`)
+		console.log('endcoded:', fileName)
 		const dir = `${process.cwd()}\\public\\files\\`
 		// const filePath = dir + name
 		const filePath = dir + fileName
@@ -58,6 +63,7 @@ export async function load(req, res) {
 }
 export async function download(req, res) {
 	const { link } = req.params
+	console.log('link', link)
 	try {
 		const filePath = path.join(__dirname, `../public/files/${link}`)
 		res.download(filePath, (err) => {
